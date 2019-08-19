@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+
+    {% if title %}
+        <title>Invitation Blog - {{ title }}</title>
+    {% else %}
+        <title>Invitation Blog</title>
+    {% endif %}
+</head>
+<body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       {% if user.is_authenticated %}
+        {% if user.birthday.image.url%}
+          <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="{{ user.birthday.image.url }}"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        {% else %}
+          <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="../static/images/default.jpg"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        {% endif %}
+       {% else %}
+        <h5><a style="color: green" class="navbar-brand" href="{% url 'invite-home' %}">Wish Ur Buddy</a></h5>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+       {% endif %} 
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          {% if user.is_authenticated %}
+            <h6><a style="color: rgb(0, 60, 255)" class="nav-link" href="{% url 'def_wish' %}">Wish <span class="sr-only">(current)</span></a></h6>
+          {% endif %}
+          {% if user.is_authenticated %}
+            {% if user.birthday.image.url%}
+              <h6><a style="color: rgb(0, 60, 255)" class="nav-link" href="{% url 'bday' %}">Birthday <span class="sr-only">(current)</span></a></h6>
+            {% else %}
+              <h6><a style="color: rgb(0, 60, 255)" class="nav-link" href="{% url 'birthday' %}">Birthday <span class="sr-only">(current)</span></a></h6>
+            {% endif %}
+          {% endif %}
+          {% if user.is_authenticated %}
+            {% if user.profile.image.url %}
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active ">
+                  <h3><a style="color: rgb(255, 0, 0);font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif" class="nav-link" href="{% url 'home' %}">Wishes From -- <span style="color: rgb(23, 218, 23)">{{ user.username }}</span><span class="sr-only">(current)</span></a></h3>
+                </li>
+              </ul>
+            {% else %}
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0 text-center">
+                <li class="nav-item active ">
+                  <h3><a style="color: rgb(255, 0, 0);font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif" class="nav-link" href="{% url 'wish' %}">Wishes From -- <span style="color: rgb(23, 218, 23)">{{ user.username }}</span><span class="sr-only">(current)</span></a></h3>
+                </li>
+              </ul>
+            {% endif %}
+          {% else %}
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+             <li class="nav-item active">
+               <h3><a style="color: rgb(255, 0, 0)" class="nav-link" href="{% url 'home' %}">WISHING APP<span class="sr-only">(current)</span></a></h3>
+             </li>
+           </ul>
+          {% endif %}
+          <form class="form-inline my-2 my-lg-0">
+            {% if user.is_authenticated %}
+              <h6><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a></h6>
+              <h6><a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a></h6>
+            {% else %}
+              <h6><a class="nav-item nav-link" href="{% url 'login' %}">Login</a></h6>
+              <h6><a class="nav-item nav-link" href="{% url 'register' %}">Register</a></h6>
+            {% endif %}
+          </form>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="row mt-4">
+          {% if messages %}
+            {% for message in messages %}
+              <span class="ml-3 alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+      </div>
+    </div>
+    
+
+  <!-- <script>
+    function raj(){
+      document.getElementById("raj").style.display='none';
+    }
+  </script> -->
+
+</body>
+</html>
+
