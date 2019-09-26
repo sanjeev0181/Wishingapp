@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 <html>
 <head>
 
@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'blog/main.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     {% if title %}
         <title>Invitation Blog - {{ title }}</title>
@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#cae6da !important;opacity:0.8">
        {% if user.is_authenticated %}
         {% if user.birthday.image.url%}
           <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="{{ user.birthday.image.url }}"></a>
@@ -29,17 +29,24 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         {% else %}
-          <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="../static/images/default.jpg"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+          {% if user.profile.image.url %}
+            <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="{{ user.profile.image.url }}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          {% else %}
+            <a class="navbar-brand" href="{% url 'profile' %}"><img style="width:50px;height: 50px;" class="rounded-circle account-img" src="../static/images/default.jpg"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          {% endif %}
         {% endif %}
        {% else %}
         <h5><a style="color: green" class="navbar-brand" href="{% url 'invite-home' %}">Wish Ur Buddy</a></h5>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-       {% endif %} 
+       {% endif %}
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           {% if user.is_authenticated %}
             <h6><a style="color: rgb(0, 60, 255)" class="nav-link" href="{% url 'def_wish' %}">Wish <span class="sr-only">(current)</span></a></h6>
@@ -75,6 +82,7 @@
           <form class="form-inline my-2 my-lg-0">
             {% if user.is_authenticated %}
               <h6><a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a></h6>
+              <h6><a class="nav-item nav-link" href="{% url 'password_reset' %}">Password Change</a></h6>
               <h6><a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a></h6>
             {% else %}
               <h6><a class="nav-item nav-link" href="{% url 'login' %}">Login</a></h6>
@@ -96,7 +104,7 @@
           {% block content %}{% endblock %}
       </div>
     </div>
-    
+
 
   <!-- <script>
     function raj(){
