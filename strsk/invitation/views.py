@@ -10,12 +10,15 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,ProfileFo
 def home(request):
     return render(request, 'base.html')
 
+@login_required
 def bday(request):
     return render(request, 'users/bday.html')
 
+@login_required
 def def_wish(request):
     return render(request, 'users/dif_wish.html')
 
+@login_required
 def birthday(request):
     if request.method == 'POST':
         form = BirthdayForm(request.POST,request.FILES,instance=request.user)
@@ -32,17 +35,18 @@ def birthday(request):
             except:
                 messages.warning(request, f'Already you have done! update that')
                 return redirect('profile')
-            
+
 
     else:
         form = BirthdayForm()
-        
+
     context = {
         'form': form
     }
 
     return render(request, 'users/birthday.html', context)
 
+@login_required
 def wish(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST,request.FILES,instance=request.user)
@@ -61,18 +65,18 @@ def wish(request):
             except:
                 messages.warning(request, f'Already you have wished! update that')
                 return redirect('profile')
-            
+
 
     else:
         form = ProfileForm()
-        
+
     context = {
         'form': form
     }
 
     return render(request, 'users/wish.html', context)
 
-    
+
 @login_required
 def home1(request):
     return render(request, 'users/home.html')
