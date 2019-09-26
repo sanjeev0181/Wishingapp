@@ -4,15 +4,15 @@
         <!-- <h1 class="text-center mt-3">Welcoming Future Couples</h1> -->
           <div class="container-fluid">
             <div class="row">
-              <div class="col col-sm-4">
-                <div class="ml-5">
+              <div class="col-lg-4 mt-2">
+                <div class="thumbnail ml-3">
                     <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" alt="Lights" style="width:300px;height:300px;">
                     <div class="caption text-center mt-4 ">
                       <h2 style="color:rgb(250, 63, 6);margin-left: -10px;">{{ user.profile.king }}</h2>
                     </div>
                 </div>
               </div>
-              <div class="col col-sm-4 mt-4">
+              <div class="col-lg-4 mt-4">
                 <div style="border:1px solid rgb(144, 189, 21)" class="thumbnail text-center">
                   <h3 style="color:red">Welcome To Loving Birds</h3>
                   <h3 style="color:green">Made For Each Other</h3>
@@ -27,8 +27,8 @@
                   <h3 class="" style="color:red">Going To Marry Soon</h3>
                 </div>
               </div>
-              <div class="col col-sm-4">
-                <div class="ml-5">
+              <div class="col-lg-4 mt-2">
+                <div class="thumbnail ml-3">
                     <img class="rounded-circle account-img" src="{{ user.profile.image1.url }}" alt="Fjords" style="width:300px;height:300px;">
                     <div class="caption text-center mt-4">
                       <h2 style="color:rgb(200, 255, 0);margin-left: -10px;">{{ user.profile.queen }}</h2>
@@ -37,5 +37,5 @@
               </div>
             </div>
           </div>
-          
+
   {% endblock content %}
